@@ -614,6 +614,19 @@
 .aj-name-in{display:flex;gap:6px;align-items:center}
 .aj-name-in .txt{flex:1;min-width:0}
 .aj-name-in .icon-btn.done{color:var(--ok)}
+/* ===== Criar conta ===== */
+.auth-alt{margin-top:12px;text-align:center;font-size:.84rem;color:var(--muted)}
+.auth-card .auth-link{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:0;background:none;border:none;color:var(--pt);font:inherit;font-weight:700;cursor:pointer;padding:2px 4px;border-radius:6px}
+.auth-link .svg-i{width:15px;height:15px}
+.auth-link:hover{text-decoration:underline}
+.auth-link:focus-visible{outline:2px solid var(--primary)}
+.auth-info{display:flex;gap:8px;align-items:flex-start;background:var(--primary-soft);color:var(--text);border-radius:12px;padding:9px 12px;font-size:.78rem;margin:2px 0 14px;line-height:1.45}
+.auth-info .svg-i{color:var(--pt);flex:none;margin-top:1px}
+.auth-msg.ok{color:var(--ok)}
+.auth-card .field.invalid .txt{border-color:var(--danger)}
+.pwd-meter{height:5px;border-radius:99px;background:var(--line);overflow:hidden;margin:-8px 0 4px}
+.pwd-meter i{display:block;height:100%;width:0;background:var(--danger);transition:.2s}
+.pwd-hint{font-size:.72rem;color:var(--muted);min-height:15px;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -623,9 +636,20 @@
     <div class="field"><label class="lbl" for="loginUser"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> E-mail</label><input class="txt" id="loginUser" type="email" autocomplete="username" required placeholder="seu.email@empresa.com"></div>
     <div class="field login-pwd"><label class="lbl" for="loginPass"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg> Senha</label><input class="txt" id="loginPass" type="password" autocomplete="current-password" required placeholder="Digite sua senha"><button class="pwd-eye" id="togglePwd" type="button" aria-label="Mostrar senha"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
     <button class="btn btn-primary" type="submit"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg> <span>Entrar</span></button>
-    <div class="auth-sep">ou</div>
-    <button class="btn btn-ghost" id="guestAccess" type="button" hidden><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> Acessar como visitante</button>
     <div class="auth-msg" id="loginMsg" aria-live="polite"></div>
+    <div class="auth-alt">Não tem acesso? <button type="button" class="auth-link" id="goSignup"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg> Criar conta</button></div>
+  </form>
+  <form class="auth-card" id="signupForm" autocomplete="on" novalidate hidden>
+    <div class="auth-brand"><img class="app-logo" id="signupLogo" alt="GECA"><div><h1>Criar conta</h1><p>Gestão da Capacidade</p></div></div>
+    <div class="field" id="suwNome"><label class="lbl" for="suNome"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg> Nome completo *</label><input class="txt" id="suNome" autocomplete="name" maxlength="80" placeholder="Seu nome"></div>
+    <div class="field" id="suwEmail"><label class="lbl" for="suEmail"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> E-mail *</label><input class="txt" id="suEmail" type="email" autocomplete="email" placeholder="seu.email@empresa.com"></div>
+    <div class="field login-pwd" id="suwPass"><label class="lbl" for="suPass"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg> Senha *</label><input class="txt" id="suPass" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres"><button class="pwd-eye" id="suTogglePwd" type="button" aria-label="Mostrar senha"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+    <div class="pwd-meter" aria-hidden="true"><i id="suMeter"></i></div><div class="pwd-hint" id="suMeterTx" aria-live="polite"></div>
+    <div class="field" id="suwPass2"><label class="lbl" for="suPass2"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg> Confirmar senha *</label><input class="txt" id="suPass2" type="password" autocomplete="new-password" placeholder="Repita a senha"></div>
+    <div class="auth-info"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span>A conta é criada com perfil <b>VISITANTE</b> (somente visualização). Um ADM libera o perfil Controler e os complexos.</span></div>
+    <button class="btn btn-primary" type="submit" id="suBtn"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg> <span>Criar conta</span></button>
+    <div class="auth-msg" id="signupMsg" aria-live="polite"></div>
+    <div class="auth-alt">Já tem conta? <button type="button" class="auth-link" id="goLogin">Entrar</button></div>
   </form>
 </div>
 
@@ -1196,10 +1220,17 @@
     }
     return Array.isArray(rows)?(rows[0]||null):null;
   }
+  async function ensureProfile(uid, accessToken, nome){
+    try{ if(await profileFor(uid, accessToken)) return; }catch(_){}
+    try{
+      await fetch(SB_URL + '/rest/v1/' + TABLE_PROFILE, {method:'POST', headers:{apikey:SB_KEY, Authorization:'Bearer ' + accessToken, 'Content-Type':'application/json', Prefer:'return=minimal,resolution=ignore-duplicates'},
+        body:JSON.stringify({user_id:uid, nome:nome || null, perfil:'VISITANTE', ativo:true})});
+    }catch(_){}
+  }
   async function authenticate(email,senha){
     const a=await authFetch('token?grant_type=password',{method:'POST',body:JSON.stringify({email:clean(email),password:senha})});
-    const u=a.user, p=await profileFor(u.id,a.access_token);
-    if(!p) throw new Error('Login OK, mas não existe linha em '+TABLE_PROFILE+' para este usuário (user_id '+u.id+').');
+    const u=a.user; let p=await profileFor(u.id,a.access_token);
+    if(!p){ await ensureProfile(u.id,a.access_token,U(u.user_metadata?.nome||u.user_metadata?.name||'')); p=await profileFor(u.id,a.access_token).catch(()=>null)||{perfil:'VISITANTE',ativo:true,nome:u.user_metadata?.nome||u.user_metadata?.name||u.email}; }
     if(p.ativo===false) throw new Error('Usuário com perfil inativo no GECA.');
     return {id:u.id,nome:p.nome||u.user_metadata?.name||u.email,email:u.email,perfil:normPerfil(p.perfil),access_token:a.access_token,refresh_token:a.refresh_token,expires_at:a.expires_at};
   }
@@ -3054,7 +3085,6 @@
   const ajDraft = {cx:'', sem:[], pl:[], ct:[]};
   const ajFromDb = r => ({id:r.id, nome:U(r.nome), descricao:r.descricao || '', complexo_id:r.complexo_id || null, semanas:(r.semanas || []).slice().sort(), plantas:r.plantas || [], centros:r.centros || [], criado_nome:r.criado_nome || '', atualizado:r.updated_at || r.created_at});
   async function ajLoad(){ if(!canWrite()) return; ajPerfis = (await sb(TABLE_AJ + '?select=' + AJ_COLS + '&order=nome.asc') || []).map(ajFromDb); }
-  /* ---------- Copiar para a área de transferência ---------- */
   async function copyText(txt){
     try{ if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(txt); return true; } }catch(_){}
     try{
@@ -3614,7 +3644,59 @@
     catch(err){ $('#loginMsg').textContent=err.message; }
     finally{ btn.disabled=false; btn.querySelector('span').textContent='Entrar'; }
   });
-  $('#guestAccess').addEventListener('click',()=>enterSession({id:null,nome:'Visitante',email:'',perfil:'VISITANTE'}));
+  /* ---------- Criar conta (Supabase Auth signup) ---------- */
+  function authMode(m){
+    $('#loginForm').hidden = m !== 'login'; $('#signupForm').hidden = m !== 'signup';
+    $('#loginMsg').textContent = ''; $('#signupMsg').textContent = ''; $('#signupMsg').classList.remove('ok');
+    if(m === 'signup'){ const lg = $('#loginLogo'); if(lg && lg.src) $('#signupLogo').src = lg.src; if(clean($('#loginUser').value)) $('#suEmail').value = clean($('#loginUser').value); setTimeout(() => $('#suNome').focus(), 30); }
+    else setTimeout(() => $('#loginUser').focus(), 30);
+  }
+  $('#goSignup').addEventListener('click', () => authMode('signup'));
+  $('#goLogin').addEventListener('click', () => authMode('login'));
+  $('#suTogglePwd').addEventListener('click', () => { const show = $('#suPass').type === 'password'; ['#suPass','#suPass2'].forEach(i => $(i).type = show ? 'text' : 'password'); $('#suTogglePwd').innerHTML = show ? SVG.eyeOff : SVG.eye; $('#suTogglePwd').setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha'); });
+  function pwdScore(p){ let s = 0; if(p.length >= 6) s++; if(p.length >= 10) s++; if(/[A-Z]/.test(p) && /[a-z]/.test(p)) s++; if(/\d/.test(p)) s++; if(/[^A-Za-z0-9]/.test(p)) s++; return Math.min(s, 4); }
+  $('#suPass').addEventListener('input', () => {
+    const p = $('#suPass').value, sc = p ? pwdScore(p) : 0;
+    const cor = ['var(--danger)','var(--danger)','#e67e22','#27ae60','var(--ok)'][sc], tx = ['','Fraca','Razoável','Boa','Forte'][sc];
+    $('#suMeter').style.width = (p ? Math.max(sc, 1) * 25 : 0) + '%'; $('#suMeter').style.background = cor;
+    $('#suMeterTx').textContent = p ? 'Força da senha: ' + tx + (p.length < 6 ? ' (mínimo 6 caracteres)' : '') : '';
+  });
+  $('#signupForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const nome = up($('#suNome').value), email = clean($('#suEmail').value).toLowerCase(), p1 = $('#suPass').value, p2 = $('#suPass2').value;
+    const msg = $('#signupMsg'); msg.classList.remove('ok');
+    const fail = (id, t) => { ['suwNome','suwEmail','suwPass','suwPass2'].forEach(x => $('#' + x).classList.toggle('invalid', x === id)); msg.textContent = t; $('#' + id + ' input').focus(); };
+    if(nome.length < 3) return fail('suwNome', 'Informe seu nome completo.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail('suwEmail', 'Informe um e-mail válido.');
+    if(p1.length < 6) return fail('suwPass', 'A senha deve ter no mínimo 6 caracteres.');
+    if(p1 !== p2) return fail('suwPass2', 'As senhas não conferem.');
+    ['suwNome','suwEmail','suwPass','suwPass2'].forEach(x => $('#' + x).classList.remove('invalid'));
+    const btn = $('#suBtn'); btn.disabled = true; btn.querySelector('span').textContent = 'Criando conta...'; msg.textContent = '';
+    try{
+      const r = await authFetch('signup', {method:'POST', body:JSON.stringify({email, password:p1, data:{name:nome, nome}})});
+      const user = r.user || r, tok = r.access_token;
+      if(user && Array.isArray(user.identities) && !user.identities.length) throw new Error('Este e-mail já possui conta. Use "Entrar" ou recupere a senha com o ADM.');
+      if(tok){
+        await ensureProfile(user.id, tok, nome);
+        $('#suPass').value = $('#suPass2').value = '';
+        enterSession(await authenticate(email, p1));
+        toast('Conta criada! Você entrou como VISITANTE. Solicite ao ADM a liberação de perfil.');
+      } else {
+        $('#loginUser').value = email; $('#suPass').value = $('#suPass2').value = '';
+        authMode('login');
+        $('#loginMsg').classList.add('ok');
+        $('#loginMsg').textContent = 'Conta criada! Confirme pelo link enviado para ' + email + ' e depois faça login.';
+      }
+    }catch(err){
+      let t = err.message;
+      if(/already registered|already exists|user_already_exists/i.test(t)) t = 'Este e-mail já possui conta. Use "Entrar".';
+      else if(/signups? not allowed|signup_disabled/i.test(t)) t = 'Cadastro desativado no Supabase (Authentication › Sign In / Providers › "Allow new users to sign up").';
+      else if(/weak|password should/i.test(t)) t = 'Senha fraca: use ao menos 6 caracteres, com letras e números.';
+      else if(/invalid.*email|email_address_invalid/i.test(t)) t = 'E-mail inválido ou domínio não permitido.';
+      msg.textContent = t;
+    }finally{ btn.disabled = false; btn.querySelector('span').textContent = 'Criar conta'; }
+  });
+  $('#loginForm').addEventListener('input', () => $('#loginMsg').classList.remove('ok'));
   $('#togglePwd').addEventListener('click',()=>{const show=$('#loginPass').type==='password';$('#loginPass').type=show?'text':'password';$('#togglePwd').innerHTML=show?SVG.eyeOff:SVG.eye;$('#togglePwd').setAttribute('aria-label',show?'Ocultar senha':'Mostrar senha');});
   $('#btnLogout').addEventListener('click',async()=>{try{if(session?.access_token)await authFetch('logout',{method:'POST',headers:{Authorization:'Bearer '+session.access_token}})}catch(_){}logRows=[];complexos=[];data=[];desvios=[];saveCache();try{saveDvCache();}catch(_){}session=null;saveSession();$('#loginPass').value='';$('#loginMsg').textContent='';$('#loginScreen').hidden=false;applySession()});
 
@@ -3668,7 +3750,8 @@
 
   $('#gvIni').value = mondayOf(todayISO());
   $('#loginLogo').src = root.querySelector('.app-logo').src;
-  try{ session=JSON.parse(sessionStorage.getItem(KEY+'_session')||'null'); if(session) session.perfil=normPerfil(session.perfil); }catch(_){ session=null; }
+  $('#signupLogo').src = $('#loginLogo').src;
+  try{ session=JSON.parse(sessionStorage.getItem(KEY+'_session')||'null'); if(session) session.perfil=normPerfil(session.perfil); if(session && !session.access_token){ session=null; sessionStorage.removeItem(KEY+'_session'); } }catch(_){ session=null; }
   showView((location.hash || '#gestao').slice(1));
   applySession();
   if(session){ ensureToken().then(()=>{ if(session) reload(!data.length); }).catch(()=>{}); }
