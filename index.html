@@ -85,6 +85,7 @@
   .xl-fig img{display:block;width:100%;height:auto;cursor:zoom-in}
   .xl-fig figcaption{padding:7px 10px;font-size:.74rem;color:#555;border-top:1px solid #e5e5e5;background:#fafafa}
   @media(max-width:700px){.xl-b{grid-template-columns:1fr}.xl-fig{max-width:340px;justify-self:center}}
+  #gvBtnXlsm{display:none}.is-admin #gvBtnXlsm,.is-controller #gvBtnXlsm{display:inline-flex}
   .btn-xl{background:#1d6f42;color:#fff}.btn-xl:hover{background:#185c37}.btn-xl .svg-i{width:17px;height:17px}
 
   /* ---------- Buttons ---------- */
@@ -489,6 +490,9 @@
   .is-visitor [data-write],.is-visitor .actions{display:none!important}.side a.admin-only{display:none}.is-admin .side a.admin-only{display:flex}.side a.log-only{display:none}.is-admin .side a.log-only,.is-controller .side a.log-only{display:flex}
   .profile-badge{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--primary-soft);color:var(--pt);font-size:.72rem;font-weight:800}
   .status-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:6px}.status-dot.off{background:var(--muted)}
+  /* Remove o olho nativo do Edge/IE: fica somente o ícone do app */
+  input[type=password]::-ms-reveal,input[type=password]::-ms-clear{display:none!important;width:0;height:0}
+  input::-webkit-credentials-auto-fill-button,input::-webkit-contacts-auto-fill-button{visibility:hidden;display:none!important;pointer-events:none}
   .login-pwd{position:relative}.login-pwd input{padding-right:45px!important}.pwd-eye{position:absolute;right:7px;bottom:5px;border:0;background:transparent;color:var(--muted);cursor:pointer;width:34px;height:34px;border-radius:8px;display:grid;place-items:center}.pwd-eye:hover{color:var(--pt);background:var(--card-2)}.auth-card .lbl .svg-i{width:13px;height:13px;vertical-align:-2px;margin-right:3px}.user-pill .svg-i{width:15px;height:15px}
   @media(max-width:760px){.user-pill span{display:none}.user-pill{padding:7px}.auth-card{padding:22px}.side a.admin-only{display:none!important}.is-admin .side a.admin-only{display:flex!important}.side a.log-only{display:none!important}.is-admin .side a.log-only,.is-controller .side a.log-only{display:flex!important}}
   /* Turnos noturnos: os dois blocos de 4,4 h permanecem amarelos */
@@ -2438,9 +2442,11 @@
   });
   applyGvZoom(gvZoom);
   /* ---------- Download da planilha Ajuste_Capacidade_CT - GECA.xlsm (embutida) ---------- */
-  $('#gvBtnXlsm').addEventListener('click', () => { openOv('ovXlsm'); setTimeout(() => $('#xlDownload').focus(), 50); });
+  const canXlsm = () => ['ADM','CONTROLER'].includes(role());
+  $('#gvBtnXlsm').addEventListener('click', () => { if(!canXlsm()){ if(typeof toast==='function') toast('Somente Controler e ADM podem baixar a planilha'); return; } openOv('ovXlsm'); setTimeout(() => $('#xlDownload').focus(), 50); });
   $('#xlImg').addEventListener('click', () => window.open($('#xlImg').src, '_blank'));
   $('#xlDownload').addEventListener('click', () => {
+    if(!canXlsm()){ closeOv('ovXlsm'); if(typeof toast==='function') toast('Somente Controler e ADM podem baixar a planilha'); return; }
     try{
       const b64 = (document.getElementById('xlsmGecaB64').textContent || '').replace(/\s+/g, '');
       if(!b64) throw new Error('Planilha não encontrada no aplicativo.');
