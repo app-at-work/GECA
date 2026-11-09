@@ -1078,7 +1078,7 @@
           <input type="radio" name="uPerfil" id="upCtl" value="CONTROLER"><label for="upCtl">CONTROLER</label>
           <input type="radio" name="uPerfil" id="upVis" value="VISITANTE"><label for="upVis">VISITANTE</label>
         </div><div class="err"></div></div>
-      <div class="field" id="uwCx"><label class="lbl">Complexos atribuídos</label><div class="ss" id="uCx"></div><div class="calc-hint" id="uCxHint" hidden>ADM visualiza todos os complexos.</div><div class="err"></div></div>
+      <div class="field" id="uwCx"><label class="lbl">Complexos atribuídos <span style="font-weight:500;color:var(--muted)">(opcional)</span></label><div class="ss" id="uCx"></div><div class="calc-hint" id="uCxHint">Opcional. Sem complexo atribuído, o usuário não visualiza colaboradores nem desvios.</div><div class="err"></div></div>
       <div class="calc-hint" id="uHint"></div>
       <div class="field"><label class="switch"><input type="checkbox" id="uAtivo"><span class="sl"></span><span>Acesso ativo</span></label></div>
     </div>
@@ -2723,7 +2723,7 @@
     const self=userEdit.id===session?.id;
     const cxNomes=uCxSel.get()||[]; const cxIds=cxNomes.map(n=>(complexos.find(c=>c.nome===n)||{}).id).filter(Boolean);
     const perfilFinal=self?'ADM':perfil;
-    if(perfilFinal!=='ADM' && !cxIds.length){ setErr('uwCx','Atribua ao menos um complexo'); return; }
+    /* Complexo é opcional: usuário pode ficar sem complexo atribuído */
     const body={user_id:userEdit.id, nome:clean($('#uNome').value)||userEdit.email||null, perfil:perfilFinal, ativo:self?true:$('#uAtivo').checked};
     const btn=$('#uSave'); btn.disabled=true; busy(true,'Salvando perfil...');
     try{
@@ -2961,7 +2961,7 @@
   }
   function cxFormId(){ if(cxFixed) return cxFixed.id; const n=sCx.get(); const c=complexos.find(x=>x.nome===n); return c?c.id:null; }
   const uCxSel=SearchSelect($('#uCx'),{multi:true,placeholder:'Selecione os complexos',getOptions:()=>complexos.filter(c=>c.ativo).map(c=>c.nome),onChange:()=>setErr('uwCx','')});
-  function uCxSync(){ const p=(root.querySelector('input[name="uPerfil"]:checked')||{}).value; const adm=p==='ADM'; $('#uCxHint').hidden=!adm; $('#uCx').style.opacity=adm?'.55':''; }
+  function uCxSync(){ const p=(root.querySelector('input[name="uPerfil"]:checked')||{}).value; const adm=p==='ADM'; $('#uCxHint').textContent=adm?'ADM visualiza todos os complexos.':'Opcional. Sem complexo atribuído, o usuário não visualiza colaboradores nem desvios.'; $('#uCx').style.opacity=adm?'.55':''; }
   root.querySelectorAll('input[name="uPerfil"]').forEach(r=>r.addEventListener('change',uCxSync));
   const BLD_IC='<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1"/></svg>';
   function renderCx(){
