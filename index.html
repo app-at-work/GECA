@@ -194,6 +194,26 @@
   .overlay.show{display:flex}
   .modal{background:var(--card);border:1px solid var(--line);border-radius:18px;width:100%;max-width:960px;box-shadow:var(--shadow-lg);animation:pop .18s ease;max-height:92vh;display:flex;flex-direction:column}
   .modal.sm{max-width:560px}
+  .cs-lv{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
+  .cs-lv li{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  .cs-lv li.off{opacity:.55}
+  .cs-lv .n{width:22px;height:22px;border-radius:50%;background:var(--primary-soft);color:var(--pt);font-size:.72rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .cs-lv li.off .n{background:transparent;color:var(--muted)}
+  .cs-lv label{flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.86rem;font-weight:600}
+  .cs-lv .mv{display:flex;gap:4px}
+  .cs-lv .mv button{width:28px;height:28px;border:1px solid var(--line);border-radius:8px;background:transparent;color:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+  .cs-lv .mv button:disabled{opacity:.3;cursor:default}
+  .cs-lv .mv button:focus-visible,.cs-wk label:focus-within{outline:2px solid var(--primary);outline-offset:2px}
+  .cs-wk{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+  .cs-wk label{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.8rem}
+  .cs-wk label b{display:block;font-size:.84rem}
+  .cs-wk label span{color:var(--muted);font-size:.72rem}
+  .cs-wk label:has(input:checked){border-color:var(--primary);background:var(--primary-soft)}
+  .cs-hd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .cs-hd .lk{display:flex;gap:10px}
+  .cs-hd .lk button{background:none;border:0;color:var(--primary);font-weight:600;font-size:.78rem;cursor:pointer;padding:2px}
+  .cs-prev{font-size:.78rem;color:var(--muted)}
+  .cs-lv .ic{display:inline-flex;color:var(--pt)}
   @keyframes pop{from{transform:translateY(8px) scale(.97);opacity:0}to{transform:none;opacity:1}}
   .modal-h{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
   .modal-h h2{margin:0;font-size:1.05rem;display:flex;align-items:center;gap:8px}
@@ -487,6 +507,11 @@
   .gv-grp.lv2 .grp-btn{padding-left:36px}
   .gv-grp.lv2 .grp-btn b{font-weight:600;font-size:.76rem}
   .gv-grp.lv2 .grp-n{background:#7a9e9b}
+  .gv-grp.lv3 td,.gv-grp.lv4 td,.gv-grp.lv5 td{background:var(--card)!important;border-bottom:1px dotted #dcebe9}
+  .gv-grp.lv3 td.gv-name,.gv-grp.lv4 td.gv-name,.gv-grp.lv5 td.gv-name{background:var(--card)!important}
+  .gv-grp.lv3 .grp-btn{padding-left:54px}.gv-grp.lv4 .grp-btn{padding-left:72px}.gv-grp.lv5 .grp-btn{padding-left:90px}
+  .gv-grp.lv3 .grp-btn b,.gv-grp.lv4 .grp-btn b,.gv-grp.lv5 .grp-btn b{font-weight:600;font-size:.74rem}
+  .gv-grp.lv3 .grp-n,.gv-grp.lv4 .grp-n,.gv-grp.lv5 .grp-n{background:#9bb7b4}
   .gv-grp .grp-lv{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-right:-2px}
   @media (prefers-color-scheme:dark){.gv-grp.lv1 td,.gv-grp.lv1 td.gv-name{background:#16292a!important;border-bottom-color:#203a38}.gv-grp.lv2 td{border-bottom-color:#203a38}}
   .prg{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:middle;flex:none;font-size:10px;font-weight:800}
@@ -826,6 +851,7 @@
         <button type="button" class="btn btn-ghost" id="gvHoje">Semana atual</button>
         <button type="button" class="btn btn-ghost" id="gvMes">Mês atual</button>
         <div class="gv-jump"><div class="ss" id="gvJump"></div></div>
+        <button type="button" class="btn btn-ghost" id="gvBtnHier" title="Selecionar e organizar a hierarquia da tabela"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="5" rx="1"/><rect x="9" y="10" width="7" height="5" rx="1"/><rect x="14" y="17" width="7" height="5" rx="1"/><path d="M6 8v4.5h3M12 15v4.5h2"/></svg> Hierarquia</button>
         <button type="button" class="btn btn-ghost" id="gvGrpToggle" title="Expandir ou recolher todos os grupos"></button>
         <button type="button" class="btn btn-ghost" id="gvCapToggle" aria-pressed="true"></button>
         <div class="gv-prg-leg" aria-label="Legenda programável"><span><span class="prg sim"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="m9 15 2 2 4-4"/></svg></span>Programável</span><span><span class="prg nao"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="m14 14-4 4M10 14l4 4"/></svg></span>Não programável</span></div>
@@ -838,6 +864,7 @@
       <button type="button" class="btn btn-primary" id="gvBtnFilters"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg> Filtros <span class="count" id="gvFCount" hidden>0</span></button>
       <button type="button" class="btn btn-ghost" id="gvClearAll" hidden><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg> Limpar filtros</button>
       <button type="button" class="btn btn-xl" id="gvBtnXlsm" title="Baixar Ajuste_Capacidade_CT - GECA.xlsm"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 12 4 6M13 12l-4 6"/></svg> Planilha Ajuste Capacidade</button>
+      <button type="button" class="btn btn-ghost" id="gvBtnCapStd" title="Exportar Excel da Capacidade Standard: escolha a hierarquia e as semanas"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg> Capacidade Standard</button>
     </div>
     <div class="chips" id="gvChips"></div>
     <div class="gv-legend">
@@ -1082,6 +1109,38 @@
   </div>
 </div>
 
+<div class="overlay" id="ovGvHier" role="dialog" aria-modal="true" aria-labelledby="ghTitle">
+  <div class="modal sm">
+    <div class="modal-h"><h2 id="ghTitle"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="5" rx="1"/><rect x="9" y="10" width="7" height="5" rx="1"/><rect x="14" y="17" width="7" height="5" rx="1"/><path d="M6 8v4.5h3M12 15v4.5h2"/></svg> Hierarquia da tabela – Gestão à Vista</h2><button type="button" class="x" data-close="ovGvHier" aria-label="Fechar">×</button></div>
+    <div class="modal-b" style="grid-template-columns:1fr">
+      <div class="field"><div class="cs-hd"><label class="lbl">Níveis de agrupamento</label><div class="lk"><button type="button" id="ghReset">Restaurar padrão</button></div></div>
+        <ul class="cs-lv" id="ghLv"></ul>
+        <div class="calc-hint">Marque os níveis que formam os grupos e use as setas para ordenar. O último nível marcado mostra os colaboradores. Sem nenhum nível, a tabela lista só os colaboradores.</div></div>
+      <div class="cs-prev" id="ghPrev" aria-live="polite"></div>
+    </div>
+    <div class="modal-f"><button type="button" class="btn btn-ghost" data-close="ovGvHier">Cancelar</button><button type="button" class="btn btn-primary" id="ghApply">Aplicar</button></div>
+  </div>
+</div>
+<div class="overlay" id="ovCapStd" role="dialog" aria-modal="true" aria-labelledby="csTitle">
+  <div class="modal sm">
+    <div class="modal-h"><h2 id="csTitle"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg> Exportar Capacidade Standard</h2><button type="button" class="x" data-close="ovCapStd" aria-label="Fechar">×</button></div>
+    <div class="modal-b" style="grid-template-columns:1fr">
+      <div class="field"><div class="cs-hd"><label class="lbl">Hierarquia da tabela</label><div class="lk"><button type="button" id="csLvGv">Usar a da Gestão à Vista</button><button type="button" id="csLvReset">Restaurar padrão</button></div></div>
+        <ul class="cs-lv" id="csLv"></ul>
+        <div class="calc-hint">Cada nível marcado vira uma coluna da tabela, na ordem definida pelas setas. Os períodos vêm à direita, um por coluna.</div></div>
+      <div class="field"><label class="lbl">Colunas do período</label>
+        <div class="seg" role="radiogroup" aria-label="Colunas do período">
+          <input type="radio" name="csGran" id="csGranSem" value="semana" checked><label for="csGranSem">Uma coluna por semana</label>
+          <input type="radio" name="csGran" id="csGranDia" value="dia"><label for="csGranDia">Uma coluna por dia</label>
+        </div>
+        <div class="calc-hint" id="csGranHint"></div></div>
+      <div class="field"><div class="cs-hd"><label class="lbl">Semanas a exportar</label><div class="lk"><button type="button" id="csWkAll">Todas</button><button type="button" id="csWkNone">Nenhuma</button></div></div>
+        <div class="cs-wk" id="csWk"></div></div>
+      <div class="cs-prev" id="csPrev" aria-live="polite"></div>
+    </div>
+    <div class="modal-f"><button type="button" class="btn btn-ghost" data-close="ovCapStd">Cancelar</button><button type="button" class="btn btn-primary" id="csGo"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg> Exportar Excel</button></div>
+  </div>
+</div>
 <div class="overlay" id="ovXlsm" role="dialog" aria-modal="true" aria-labelledby="xlTitle">
   <div class="modal">
     <div class="modal-h"><h2 id="xlTitle"><svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 12 4 6M13 12l-4 6"/></svg> Planilha Ajuste Capacidade – antes de usar</h2><button type="button" class="x" data-close="ovXlsm" aria-label="Fechar">×</button></div>
@@ -2544,6 +2603,172 @@
   /* ---------- Download da planilha (somente ADM e Controler) ---------- */
   const canXlsm = () => ['ADM','CONTROLER'].includes(role());
   $('#gvBtnXlsm').addEventListener('click', () => { if(!canXlsm()){ toast('Somente Controler e ADM podem baixar a planilha'); return; } openOv('ovXlsm'); setTimeout(() => $('#xlDownload').focus(), 50); });
+  /* ---------- Exportar Capacidade Standard (Excel: qtd. por centro + pessoas) ---------- */
+  /* ---------- Hierarquia (compartilhada: Gestão à Vista e Capacidade Standard) ---------- */
+  const IC_CX = '<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1"/></svg>';
+  const IC_PL = '<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg>';
+  const IC_CT = '<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>';
+  const IC_PG = '<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="m9 15 2 2 4-4"/></svg>';
+  const LV_DEF = [
+    {k:'complexo', t:'COMPLEXO', lb:'Complexo', ic:IC_CX, v:c => c.complexo || 'SEM COMPLEXO'},
+    {k:'supervisao', t:'SUPERVISÃO', lb:'Supervisor', ic:SVG.userCheck, v:c => c.supervisao || 'SEM SUPERVISÃO'},
+    {k:'planta', t:'PLANTA', lb:'Planta', ic:IC_PL, v:c => c.planta || 'SEM PLANTA'},
+    {k:'centro', t:'CENTRO DE TRABALHO', lb:'Centro', ic:IC_CT, v:c => c.centro || 'SEM CENTRO DE TRABALHO'},
+    {k:'turno', t:'TURNO', lb:'Turno', ic:SVG.clock, v:c => c.turno || 'SEM TURNO'},
+    {k:'programavel', t:'PROGRAMÁVEL', lb:'Programável', ic:IC_PG, v:c => c.programavel || '-'}
+  ];
+  const lvOf = k => LV_DEF.find(l => l.k === k);
+  const hierActive = cfg => cfg.order.filter(k => cfg.on[k] && lvOf(k)).map(lvOf);
+  const hierCmp = lv => (a, b) => { for(const l of lv){ const r = l.k === 'turno' ? (TURNOS.indexOf(a.turno) - TURNOS.indexOf(b.turno)) : l.v(a).localeCompare(l.v(b), 'pt-BR'); if(r) return r; } return 0; };
+  const hierClone = c => ({order:c.order.slice(), on:Object.assign({}, c.on)});
+  const GV_HIER_DEF = () => ({order:['supervisao','planta','centro','complexo','turno','programavel'], on:{supervisao:true, planta:true, centro:true}});
+  const CS_DEF = () => ({order:['complexo','planta','centro','supervisao','turno','programavel'], on:{complexo:true, planta:true, centro:true}});
+  function hierLoad(){
+    try{ const h = JSON.parse(localStorage.getItem(KEY + '_gvHier'));
+      if(h && Array.isArray(h.order) && h.on){ const ord = h.order.filter(lvOf); LV_DEF.forEach(l => { if(!ord.includes(l.k)) ord.push(l.k); }); return {order:ord, on:h.on}; } }catch(_){}
+    return GV_HIER_DEF();
+  }
+  let gvHier = hierLoad();
+  const UP = '<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>';
+  const DN = '<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+  /* editor de hierarquia reutilizável: ul + getter do cfg + callback */
+  function hierEditor(ul, get, onChange){
+    function render(focus){
+      const cfg = get(); let n = 0;
+      ul.innerHTML = cfg.order.map((k, i) => { const l = lvOf(k), on = !!cfg.on[k]; return `<li class="${on ? '' : 'off'}"><span class="n">${on ? ++n : '–'}</span>
+        <label><input type="checkbox" data-k="${k}" ${on ? 'checked' : ''}><span class="ic">${l.ic}</span> ${esc(l.lb)}</label>
+        <span class="mv"><button type="button" data-up="${i}" aria-label="Subir ${esc(l.lb)}" ${i ? '' : 'disabled'}>${UP}</button><button type="button" data-dn="${i}" aria-label="Descer ${esc(l.lb)}" ${i < cfg.order.length - 1 ? '' : 'disabled'}>${DN}</button></span></li>`; }).join('');
+      if(focus){ const el = ul.querySelector(focus); el && !el.disabled ? el.focus() : null; }
+      onChange();
+    }
+    ul.addEventListener('change', e => { const k = e.target.dataset.k; if(!k) return; get().on[k] = e.target.checked; render(`[data-k="${k}"]`); });
+    ul.addEventListener('click', e => {
+      const b = e.target.closest('button'); if(!b || b.disabled) return;
+      const up = b.dataset.up != null, i = +(up ? b.dataset.up : b.dataset.dn), j = up ? i - 1 : i + 1, o = get().order;
+      [o[i], o[j]] = [o[j], o[i]];
+      render(`[data-${up ? 'up' : 'dn'}="${j}"]`);
+      if(document.activeElement === document.body || !ul.contains(document.activeElement)){ const c = ul.querySelector(`[data-k="${o[j]}"]`); c && c.focus(); }
+    });
+    return render;
+  }
+
+  /* ---------- Modal Hierarquia da Gestão à Vista ---------- */
+  let ghDraft = hierClone(gvHier);
+  const ghRender = hierEditor($('#ghLv'), () => ghDraft, () => {
+    const lv = hierActive(ghDraft);
+    $('#ghPrev').textContent = lv.length ? 'Tabela: ' + lv.map(l => l.lb).join(' › ') + ' › Colaboradores' : 'Sem agrupamento: a tabela lista só os colaboradores.';
+  });
+  $('#gvBtnHier').addEventListener('click', () => { ghDraft = hierClone(gvHier); ghRender(); openOv('ovGvHier'); setTimeout(() => $('#ghApply').focus(), 50); });
+  $('#ghReset').addEventListener('click', () => { ghDraft = GV_HIER_DEF(); ghRender(); });
+  $('#ghApply').addEventListener('click', () => {
+    gvHier = hierClone(ghDraft);
+    try{ localStorage.setItem(KEY + '_gvHier', JSON.stringify(gvHier)); }catch(_){}
+    gvCollapsed.clear(); closeOv('ovGvHier'); renderGV();
+    toast('Hierarquia aplicada: ' + (hierActive(gvHier).map(l => l.lb).join(' › ') || 'sem agrupamento'));
+  });
+
+  /* ---------- Capacidade Standard: somente cadastro (sem desvios) ---------- */
+  let csCfg = null, csWeeks = [], csSel = new Set(), csGran = 'semana';
+  function capStdRows(mon){
+    const q = norm($('#gvSearch').value);
+    const F = ['colaborador','turno','planta','centro','programavel','supervisao'];   // filtros de evento/desvio são ignorados
+    return data.map(c => [c, verAt(c, mon)]).filter(([, v]) =>
+      F.every(k => !gvApplied[k].length || gvApplied[k].includes(v[k])) &&
+      (!q || norm([v.colaborador, v.turno, v.planta, v.centro, v.supervisao].join(' ')).includes(q)));
+  }
+  const csRender = hierEditor($('#csLv'), () => csCfg, csPreview);
+  function csRenderWk(){
+    $('#csWk').innerHTML = csWeeks.map(m => { const w = isoWeek(m); return `<label><input type="checkbox" data-w="${w}" ${csSel.has(w) ? 'checked' : ''}><div><b>${w}</b><span>${br(m)} a ${br(addDays(m, 6))}</span></div></label>`; }).join('');
+    csPreview();
+  }
+  function csPreview(){
+    if(!csCfg) return;
+    const lv = hierActive(csCfg);
+    const nW = csWeeks.filter(m => csSel.has(isoWeek(m))).length;
+    $('#csGranHint').textContent = csGran === 'semana'
+      ? 'Conta todos os cadastrados no grupo na semana, conforme o cadastro vigente nela.'
+      : 'Conta os cadastrados com escala no dia (turno trabalhando), sem considerar desvios.';
+    $('#csPrev').textContent = (lv.length ? 'Colunas: ' + lv.map(l => l.lb).join(' › ') : 'Selecione ao menos um nível.') + ' + ' + (csGran === 'semana' ? nW + ' coluna(s) de semana' : (nW * 7) + ' coluna(s) de dia') + '.';
+    $('#csGo').disabled = !lv.length || !nW;
+  }
+  function openCapStd(){
+    if(!csCfg) csCfg = hierActive(gvHier).length ? hierClone(gvHier) : CS_DEF();
+    const r = gvRange();
+    const prev = new Set(csWeeks.map(isoWeek));
+    csWeeks = Array.from({length:r.nW}, (_, i) => addDays(r.s, i * 7));
+    const keep = csWeeks.map(isoWeek).filter(w => csSel.has(w) && prev.has(w));
+    csSel = new Set(keep.length ? keep : csWeeks.map(isoWeek));
+    csGran = gvMode === 'dia' ? 'dia' : 'semana';
+    $(csGran === 'dia' ? '#csGranDia' : '#csGranSem').checked = true;
+    csRender(); csRenderWk(); openOv('ovCapStd');
+    setTimeout(() => $('#csGo').focus(), 50);
+  }
+  root.querySelectorAll('input[name="csGran"]').forEach(r => r.addEventListener('change', () => { csGran = r.value; csPreview(); }));
+  $('#csLvReset').addEventListener('click', () => { csCfg = CS_DEF(); csRender(); });
+  $('#csLvGv').addEventListener('click', () => { csCfg = hierClone(gvHier); if(!hierActive(csCfg).length) csCfg = CS_DEF(); csRender(); });
+  $('#csWk').addEventListener('change', e => { const w = e.target.dataset.w; if(!w) return; e.target.checked ? csSel.add(w) : csSel.delete(w); csPreview(); });
+  $('#csWkAll').addEventListener('click', () => { csSel = new Set(csWeeks.map(isoWeek)); csRenderWk(); });
+  $('#csWkNone').addEventListener('click', () => { csSel.clear(); csRenderWk(); });
+  async function exportCapStd(){
+    const lv = hierActive(csCfg);
+    const weeks = csWeeks.filter(m => csSel.has(isoWeek(m)));
+    if(!lv.length || !weeks.length){ toast('Selecione a hierarquia e ao menos uma semana'); return; }
+    /* períodos = colunas */
+    const pers = csGran === 'semana'
+      ? weeks.map(m => ({mon:m, days:null, h:isoWeek(m)}))
+      : weeks.flatMap(m => Array.from({length:7}, (_, i) => { const d = addDays(m, i); return {mon:m, day:d, h:DOW[new Date(d + 'T00:00:00Z').getUTCDay()] + ' ' + br(d)}; }));
+    const nP = pers.length;
+    const grp = new Map(), ppl = new Map();
+    const cacheWk = new Map();
+    pers.forEach((p, pi) => {
+      if(!cacheWk.has(p.mon)) cacheWk.set(p.mon, capStdRows(p.mon));
+      cacheWk.get(p.mon).forEach(([c, v]) => {
+        if(p.day && !(escalaDia(v.turno, p.day).total > 0)) return;   // dia: só quem tem escala no dia
+        const vals = lv.map(l => l.v(v)), k = vals.join('\u0001');
+        if(!grp.has(k)) grp.set(k, {v, vals, n:new Array(nP).fill(0)});
+        grp.get(k).n[pi]++;
+        const pk = k + '\u0001' + c.id;
+        if(!ppl.has(pk)) ppl.set(pk, {v, vals, n:new Array(nP).fill('')});
+        ppl.get(pk).n[pi] = 1;
+      });
+    });
+    if(!ppl.size){ toast('Nenhum colaborador para exportar com os filtros atuais'); return; }
+    const srt = hierCmp(lv);
+    const gl = [...grp.values()].sort((a, b) => srt(a.v, b.v));
+    const pl = [...ppl.values()].sort((a, b) => srt(a.v, b.v) || a.v.colaborador.localeCompare(b.v.colaborador, 'pt-BR'));
+    const rest = LV_DEF.filter(l => !lv.includes(l));
+    const hp = pers.map(p => p.h);
+    const s1 = [[...lv.map(l => l.t), ...hp]];
+    gl.forEach(g => s1.push([...g.vals, ...g.n]));
+    const tot = new Array(nP).fill(0); gl.forEach(g => g.n.forEach((x, i) => tot[i] += x));
+    s1.push(['TOTAL', ...lv.slice(1).map(() => ''), ...tot]);
+    const s2 = [[...lv.map(l => l.t), 'COLABORADOR', ...rest.map(l => l.t), ...hp]];
+    pl.forEach(r => s2.push([...r.vals, r.v.colaborador, ...rest.map(l => l.v(r.v)), ...r.n]));
+    const fname = 'GECA_Capacidade_Standard_' + (csGran === 'dia' ? 'dia_' : '') + isoWeek(weeks[0]) + (weeks.length > 1 ? '_a_' + isoWeek(weeks[weeks.length - 1]) : '');
+    const btn = $('#csGo'); btn.disabled = true; busy(true, 'Gerando Capacidade Standard...');
+    try{
+      const X = await loadXLSX();
+      const wb = X.utils.book_new();
+      const wOf = t => ({'COMPLEXO':22,'PLANTA':24,'SUPERVISÃO':32,'CENTRO DE TRABALHO':32,'TURNO':11,'PROGRAMÁVEL':14,'COLABORADOR':36})[t] || (csGran === 'dia' ? 13 : 10);
+      const add = (aoa, name, totRow) => {
+        const ws = X.utils.aoa_to_sheet(aoa);
+        ws['!cols'] = aoa[0].map(t => ({wch:wOf(t)}));
+        ws['!autofilter'] = {ref:X.utils.encode_range({s:{r:0, c:0}, e:{r:aoa.length - 1 - (totRow ? 1 : 0), c:aoa[0].length - 1}})};
+        X.utils.book_append_sheet(wb, ws, name);
+      };
+      add(s1, 'QTD POR ' + (lv[lv.length - 1].k === 'centro' ? 'CENTRO' : lv[lv.length - 1].t).slice(0, 23), true);
+      add(s2, 'COLABORADORES', false);
+      X.writeFile(wb, fname + '.xlsx');
+      closeOv('ovCapStd');
+      toast('Capacidade Standard exportada: ' + nP + ' coluna(s) de ' + (csGran === 'dia' ? 'dia' : 'semana'));
+    }catch(err){
+      downloadCsv(s1, fname + '_quantidade.csv');
+      setTimeout(() => downloadCsv(s2, fname + '_colaboradores.csv'), 400);
+      toast('Erro: ' + err.message + ' Exportado em 2 arquivos CSV.');
+    }finally{ busy(false); csPreview(); }
+  }
+  $('#gvBtnCapStd').addEventListener('click', openCapStd);
+  $('#csGo').addEventListener('click', exportCapStd);
   $('#xlImg').addEventListener('click', () => window.open($('#xlImg').src, '_blank'));
   $('#xlDownload').addEventListener('click', async () => {
     if(!canXlsm()){ closeOv('ovXlsm'); toast('Somente Controler e ADM podem baixar a planilha'); return; }
@@ -2690,23 +2915,29 @@
     let rows = gvRowsBase(gvApplied)
       .filter(c => !q || norm([c.colaborador, c.turno, c.planta, c.centro, c.supervisao].join(' ')).includes(q));
     if(gvSoEvento) rows = rows.filter(c => eventosDoColab(c.id).some(d => d.inicio <= e && d.fim >= s));
-    const SEM_SUP = 'SEM SUPERVISÃO';
-    const SEM_PL = 'SEM PLANTA', SEM_CT = 'SEM CENTRO DE TRABALHO';
+    const HL = hierActive(gvHier);
     const byTurnoNome = (a,b) => (TURNOS.indexOf(a.turno) - TURNOS.indexOf(b.turno)) || a.colaborador.localeCompare(b.colaborador,'pt-BR');
     const groups = [];
-    rows.sort((a,b) => (a.supervisao || SEM_SUP).localeCompare(b.supervisao || SEM_SUP, 'pt-BR') || (a.planta || SEM_PL).localeCompare(b.planta || SEM_PL, 'pt-BR') || (a.centro || SEM_CT).localeCompare(b.centro || SEM_CT, 'pt-BR') || byTurnoNome(a,b));
-    { let S = null, P = null, C = null;
+    const hcmp = hierCmp(HL);
+    rows.sort((a,b) => hcmp(a,b) || byTurnoNome(a,b));
+    if(HL.length){
+      const cur = new Array(HL.length).fill(null);
       rows.forEach((c, ri) => {
-        const sp = c.supervisao || SEM_SUP, pl = c.planta || SEM_PL, ct = c.centro || SEM_CT;
-        if(!S || S.name !== sp){ S = {key:'S|' + sp, name:sp, label:sp, level:0, leaf:false, tipo:'sup', idx:[]}; groups.push(S); P = null; }
-        if(!P || P.name !== pl){ P = {key:'P|' + sp + '|' + pl, name:pl, label:sp + ' › ' + pl, level:1, leaf:false, tipo:'planta', idx:[]}; groups.push(P); C = null; }
-        if(!C || C.name !== ct){ C = {key:'C|' + sp + '|' + pl + '|' + ct, name:ct, label:sp + ' › ' + pl + ' › ' + ct, level:2, leaf:true, tipo:'centro', idx:[]}; groups.push(C); }
-        S.idx.push(ri); P.idx.push(ri); C.idx.push(ri);
+        const vals = HL.map(l => l.v(c));
+        let reset = false;
+        HL.forEach((l, i) => {
+          if(reset || !cur[i] || cur[i].name !== vals[i]){
+            reset = true;
+            const path = vals.slice(0, i + 1);
+            cur[i] = {key:HL.slice(0, i + 1).map(x => x.k).join('>') + '|' + path.join('|'), name:vals[i], label:path.join(' › '), level:i, leaf:i === HL.length - 1, tipo:l.k, idx:[]};
+            groups.push(cur[i]);
+          }
+          cur[i].idx.push(ri);
+        });
       });
     }
-    const GRP_IC = {sup:SVG.userCheck, planta:'<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1M12 18h1M7 18h1"/></svg>',
-      centro:'<svg class="svg-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'};
-    const GRP_LV = {sup:'Supervisor', planta:'Planta', centro:'Centro'};
+    const GRP_IC = Object.fromEntries(LV_DEF.map(l => [l.k, l.ic]));
+    const GRP_LV = Object.fromEntries(LV_DEF.map(l => [l.k, l.lb]));
 
     const days = Array.from({length:n}, (_, i) => addDays(s, i));
     const weeks = Array.from({length:nW}, (_, i) => addDays(s, i * 7));
@@ -2724,6 +2955,7 @@
       }).join('');
     }
     function grpBody(rowHtml){
+      if(!groups.length) return rows.map((c, ri) => rowHtml(c, ri)).join('');
       let hideBelow = null;
       return groups.map(G => {
         if(hideBelow !== null && G.level > hideBelow) return '';
@@ -2858,7 +3090,7 @@
       '<div><span>100% em desvio</span><b style="color:var(--danger)">' + indis.length + '</b></div><div><span>Folga / sem escala</span><b>' + folga.length + '</b></div></div>' +
       '<b>Disponíveis (' + disp.length + ')</b>' + tb(disp, true) + (indis.length ? '<b>Indisponíveis – 100% lançado (' + indis.length + ')</b>' + tb(indis, true) : '') +
       (folga.length ? '<div class="calc-hint">Folga / sem escala: ' + folga.map(o => esc(o.c.colaborador)).join(', ') + '</div>' : '') + '</div>';
-    confirmModal(SVG.users + ' Pessoas disponíveis no dia – ' + ({sup:'Supervisor', planta:'Planta', centro:'Centro de trabalho'}[G.tipo]), html, null);
+    confirmModal(SVG.users + ' Pessoas disponíveis no dia – ' + (lvOf(G.tipo)?.lb || ''), html, null);
   }
   $('#gvTable').addEventListener('keydown', e => { const td = e.target.closest('td[data-gd]'); if(td && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); gvGrpDayDetail(td); } });
   /* ---------- Detalhe ao clicar (dia ou semana) ---------- */
