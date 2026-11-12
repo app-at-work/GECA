@@ -4336,10 +4336,57 @@
   root.querySelectorAll('.side a[data-view]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); showView(a.dataset.view); }));
   $('#btnNew').addEventListener('click', () => { if(!canWrite()) return toast('Perfil somente leitura'); currentView === 'ajuste' ? openAj(null) : currentView === 'complexos' ? openCx(null) : currentView !== 'colab' ? openDesvio(null) : openForm(null); });
 
+  /* =========================================================
+     PERFIL SEMPRE ATUALIZADO DO BANCO
+     A sessão guarda o perfil em cache (sessionStorage). Ao recarregar a
+     página, clicar em Atualizar ou voltar para a aba, o perfil é relido
+     em app_user_profiles: mudanças feitas pelo ADM valem sem sair do app.
+     ========================================================= */
+  let pendingView = (location.hash || '#gestao').slice(1);   // tela pedida na URL (reaplicada se o perfil mudar)
+  let profileCheckedAt = 0, profileChecking = null;
+  async function refreshProfile(){
+    if(!session?.access_token) return false;
+    if(profileChecking) return profileChecking;
+    profileChecking = (async () => {
+      const rows = await sb(TABLE_PROFILE + '?user_id=eq.' + encodeURIComponent(session.id) + '&select=nome,perfil,ativo&limit=1');
+      profileCheckedAt = Date.now();
+      const p = Array.isArray(rows) ? rows[0] : null;
+      if(!p || !session) return false;
+      if(p.ativo === false){
+        forceLogout('Seu acesso ao GECA foi desativado pelo administrador.');
+        return true;
+      }
+      const perfil = normPerfil(p.perfil), nome = p.nome || session.nome;
+      if(perfil === session.perfil && nome === session.nome) return false;
+      const antes = session.perfil;
+      session = Object.assign({}, session, {perfil, nome});
+      saveSession();
+      if(antes !== perfil){
+        /* limpa dados exclusivos do perfil anterior */
+        logRows = []; logKey = null; logMaxTs = null; userRows = []; usrCx = {}; ajPerfis = []; apvSel.clear();
+        if(pendingView) currentView = pendingView;
+        toast('Seu perfil de acesso foi atualizado para ' + perfil);
+      }
+      applySession();
+      return antes !== perfil;
+    })().finally(() => { profileChecking = null; });
+    return profileChecking;
+  }
+  /* ao voltar para a aba/janela, confere o perfil (no máximo 1 vez por minuto) */
+  async function checkProfileOnFocus(){
+    if(!session?.access_token || document.hidden || Date.now() - profileCheckedAt < 60000) return;
+    try{ if(await refreshProfile() && session) reload(false); }catch(_){}
+  }
+  document.addEventListener('visibilitychange', checkProfileOnFocus);
+  window.addEventListener('focus', checkProfileOnFocus);
+
   async function reload(showModal){
     if(showModal) busy(true, 'Carregando dados...');
     setSync('');
     try{
+      /* perfil atualizado antes de carregar (define o que o usuário pode ver) */
+      if(session?.access_token){ try{ await refreshProfile(); }catch(_){} if(!session){ busy(false); return; } }
+      pendingView = null;
       /* complexos e sincronização em paralelo */
       await Promise.all([loadComplexos().catch(err => toast('Complexos: ' + err.message)), sb('rpc/geca_colab_sync', {method:'POST', body:'{}'}).catch(() => {})]);
       /* colaboradores, desvios, histórico e usuários (ADM) em paralelo */
